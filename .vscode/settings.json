@@ -1,0 +1,5 @@
+{
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.extraPaths": ["./backend/src"],
+  "yaml.customTags": ["!override sequence"]
+}
