@@ -30,9 +30,9 @@ class APISettings(Settings):
     """API-specific settings."""
 
     FASTAPI_ROOT: str = Field(default="api")
-    PC_NAME: str = Field(default="locahost")
-    API_PORT: int = Field(default=8000)
-    APP_PORT: int = Field(default=5173)
+    PC_NAME: str = Field(default="localhost")
+    SERVER_API_PORT: int = Field(default=8000)
+    SERVER_APP_PORT: int = Field(default=5173)
     ALLOWED_CORS: list[str] = []
 
     def __init__(self, **data):
@@ -41,10 +41,11 @@ class APISettings(Settings):
 
     def _compute_allowed_cors(self) -> list[str]:
         """Compute allowed CORS origins based on PC_NAME and NGINX_PORT."""
+        print(self.PC_NAME)
         return [
             "http://localhost:5173",
-            f"http://localhost:{self.APP_PORT}",
-            f"http://{self.PC_NAME}:{self.APP_PORT}",
+            f"http://localhost:{self.SERVER_APP_PORT}",
+            f"http://{self.PC_NAME}:{self.SERVER_APP_PORT}",
         ]
 
     @field_validator("FASTAPI_ROOT", mode="before")
@@ -57,15 +58,12 @@ class DatabaseSettings(Settings):
     """Database configuration settings."""
 
     DB_NAME: str = Field(default="local.db")
-    REALTIMEDB: str = Field(default="")
-    TABLEID_CDC: str = Field(default="")
-    TABLEID_CAI: str = Field(default="")
 
 
 class ServiceSettings(Settings):
     """Service-specific settings."""
 
-    pass
+    SERVICE_URL: str = Field(default="")
 
 
 # Instantiate settings

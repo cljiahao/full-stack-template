@@ -4,7 +4,7 @@ from pathlib import Path
 class Directory:
     """Handles directory paths and folder creation for the application."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize directory paths."""
         self.base_dir = Path(__file__).resolve().parent.parent.parent
 
@@ -13,19 +13,15 @@ class Directory:
 
         # Config folder
         self.config_dir = self.base_dir / "config"
-        self.json_dir = self.config_dir / "json"
+        self.model_dir = self.config_dir / "model"
 
         # Data folder
         self.data_dir = self.base_dir / "data"
         self.images_dir = self.data_dir / "images"
+        self.data_send_dir = self.data_dir / "datasend"
 
-    def create_folders(self) -> None:
+    def create_folders(self, folders: list[Path]) -> None:
         """Create necessary folders for logging, configuration, and data."""
-        folders = [
-            self.log_dir,
-            self.json_dir,
-            self.images_dir,
-        ]
         for folder in folders:
             try:
                 folder.mkdir(parents=True, exist_ok=True)
@@ -35,4 +31,10 @@ class Directory:
 
 # Instantiate Directory and create folders
 directory = Directory()
-directory.create_folders()
+folders = [
+    directory.log_dir,
+    directory.model_dir,
+    directory.images_dir,
+    directory.data_send_dir,
+]
+directory.create_folders(folders)
